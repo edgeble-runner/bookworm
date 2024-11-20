@@ -58,7 +58,7 @@ jobs:
 
         # Insert github_action below the model key in the configuration file
         echo "Inserting github_action below the model key..."
-        sed -i '/model: yolov8n/a \  github_action: '"$github_action" .config-kde.yaml
+        sed -i '/recipe: recipe-kde.yaml/a \  github_action: '"$github_action" .config-kde.yaml
         cat .config-kde.yaml
 
         echo "Clone container.."
