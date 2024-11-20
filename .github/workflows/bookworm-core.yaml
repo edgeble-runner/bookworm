@@ -1,4 +1,4 @@
-name: Build and Release Book-worm Core
+name: Build and Release Edgeble-6 Bookworm
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     permissions: write-all
-    name: Book-Worm Core runner
+    name: Edgeble-6 Bookworm runner
     runs-on: ubuntu-latest
 
     steps:
@@ -75,10 +75,10 @@ jobs:
     - name: Upload output artifacts
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: "v1.0"
+        tag_name: "v2.0"
         body: |
-          - Book-worm initial build
-          - Core Book-worm  
+          - Fix DTB
+          - Add swap
         files: |
           ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-b0.bmap
           ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-b0.img.gz
