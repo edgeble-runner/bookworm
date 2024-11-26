@@ -66,22 +66,22 @@ jobs:
         sudo cp -v /tmp/edgeble-container/edgeble-* /usr/local/bin/ 
         sudo chmod +x /usr/local/bin/edgeble-*
 
-        echo "Building Book-worm Core..."
+        echo "Building Bookworm Core..."
         sudo apt-get update
         sudo apt install qemu-user-static
         sudo apt install binfmt-support
-        edgeble-container -b b4 -c .config-kde.yaml bookworm
+        edgeble-container -b b5 -c .config-kde.yaml bookworm
 
     - name: Upload output artifacts
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: "v4.0"
+        tag_name: "v5.0"
         body: |
-          - Core Bookworm 
-          - Version-III Build
+          - kernel v1.7
+          - 8852BE WiFI
         files: |
-          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-b4.bmap
-          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-b4.img.gz
+          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-b5.bmap
+          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-b5.img.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
