@@ -70,18 +70,18 @@ jobs:
         sudo apt-get update
         sudo apt install qemu-user-static
         sudo apt install binfmt-support
-        edgeble-container -b b5 -c .config-kde.yaml bookworm
+        edgeble-container -b b6 -c .config-kde.yaml bookworm
 
     - name: Upload output artifacts
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: "v5.0"
+        tag_name: "v6.0"
         body: |
-          - kernel v1.7
-          - 8852BE WiFI
+          - kernel v1.8
+          - linux-next
         files: |
-          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-b5.bmap
-          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-b5.img.gz
+          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-b6.bmap
+          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-b6.img.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
