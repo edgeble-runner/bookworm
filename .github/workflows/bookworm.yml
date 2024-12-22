@@ -70,17 +70,19 @@ jobs:
         sudo apt-get update
         sudo apt install qemu-user-static
         sudo apt install binfmt-support
-        edgeble-container -b v1.8 -c .config-kde.yaml bookworm
+        edgeble-container -b v1.9 -c .config-kde.yaml bookworm
 
     - name: Upload output artifacts
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: "v1.8"
+        tag_name: "v1.9"
         body: |
-          - add edgeble-setup tool
+          - Fix WiFi
+          - Fix kerne-updater
+          - Fix E and B-Key
           - SD
             ```
-            sudo bmaptool copy --bmap openeia-6tops-bookworm-x11-xfce-v1.8.bmap openeia-6tops-bookworm-x11-xfce-v1.8.img.gz /dev/sdX
+            sudo bmaptool copy --bmap openeia-6tops-bookworm-x11-xfce-v1.9.bmap openeia-6tops-bookworm-x11-xfce-v1.9.img.gz /dev/sdX
             ```
           - eMMC
             ```
@@ -89,8 +91,8 @@ jobs:
             - Program eMMC from host same like MicroSD
             ```
         files: |
-          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-v1.8.bmap
-          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-v1.8.img.gz
+          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-v1.9.bmap
+          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-v1.9.img.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
