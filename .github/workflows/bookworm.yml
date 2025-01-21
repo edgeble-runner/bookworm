@@ -70,22 +70,25 @@ jobs:
         sudo apt-get update
         sudo apt install qemu-user-static
         sudo apt install binfmt-support
-        edgeble-container -b v1.11 -c .config-kde.yaml bookworm
+        edgeble-container -b v1.12 -c .config-kde.yaml bookworm
 
     - name: Upload output artifacts
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: "v1.11"
+        tag_name: "v1.12"
         body: |
           - Summary:
             ```
+            Mahesh:
+            - resize edgeble-setup
+            - add core tests
             Jagan:
-            - Add AX210 BT firmware
-            - Add RTL8852BE WiFi drivers
+            - alsa fixes
+            - bump kernel
             ```
           - SD
             ```
-            sudo bmaptool copy --bmap openeia-6tops-bookworm-x11-xfce-v1.11.bmap openeia-6tops-bookworm-x11-xfce-v1.11.img.gz /dev/sdX
+            sudo bmaptool copy --bmap openeia-6tops-bookworm-x11-xfce-v1.12.bmap openeia-6tops-bookworm-x11-xfce-v1.12.img.gz /dev/sdX
             ```
           - eMMC
             ```
@@ -94,8 +97,8 @@ jobs:
             - Program eMMC from host same like MicroSD
             ```
         files: |
-          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-v1.11.bmap
-          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-v1.11.img.gz
+          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-v1.12.bmap
+          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-v1.12.img.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
