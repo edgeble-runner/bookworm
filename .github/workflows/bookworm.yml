@@ -58,8 +58,8 @@ jobs:
 
         # Insert github_action below the model key in the configuration file
         echo "Inserting github_action below the model key..."
-        sed -i '/recipe: recipe-kde.yaml/a \  github_action: '"$github_action" .config-kde.yaml
-        cat .config-kde.yaml
+        sed -i '/recipe: recipe-gnome.yaml/a \  github_action: '"$github_action" .config-gnome.yaml
+        cat .config-gnome.yaml
 
         echo "Clone container.."
         git clone git@gitlab.com:edgeble/tools/edgeble-container.git /tmp/edgeble-container  
@@ -70,25 +70,21 @@ jobs:
         sudo apt-get update
         sudo apt install qemu-user-static
         sudo apt install binfmt-support
-        edgeble-container -b v1.12 -c .config-kde.yaml bookworm
+        edgeble-container -b v1.13 -c .config-gnome.yaml bookworm
 
     - name: Upload output artifacts
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: "v1.12"
+        tag_name: "v1.13"
         body: |
           - Summary:
             ```
-            Mahesh:
-            - resize edgeble-setup
-            - add core tests
             Jagan:
-            - alsa fixes
-            - bump kernel
+            - Add Gnome Desktop
             ```
           - SD
             ```
-            sudo bmaptool copy --bmap openeia-6tops-bookworm-x11-xfce-v1.12.bmap openeia-6tops-bookworm-x11-xfce-v1.12.img.gz /dev/sdX
+            sudo bmaptool copy --bmap openeia-6tops-bookworm-x11-gnome-v1.13.bmap openeia-6tops-bookworm-x11-gnome-v1.13.img.gz /dev/sdX
             ```
           - eMMC
             ```
@@ -97,8 +93,8 @@ jobs:
             - Program eMMC from host same like MicroSD
             ```
         files: |
-          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-v1.12.bmap
-          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-xfce-v1.12.img.gz
+          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-gnome-v1.13.bmap
+          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-gnome-v1.13.img.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
