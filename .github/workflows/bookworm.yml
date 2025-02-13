@@ -58,8 +58,8 @@ jobs:
 
         # Insert github_action below the model key in the configuration file
         echo "Inserting github_action below the model key..."
-        sed -i '/recipe: recipe-gnome.yaml/a \  github_action: '"$github_action" .config-gnome.yaml
-        cat .config-gnome.yaml
+        sed -i '/recipe: recipe-kde.yaml/a \  github_action: '"$github_action" .config-kde.yaml
+        cat .config-kde.yaml
 
         echo "Clone container.."
         git clone git@gitlab.com:edgeble/tools/edgeble-container.git /tmp/edgeble-container  
@@ -98,4 +98,3 @@ jobs:
           ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-kde-v1.15.img.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
