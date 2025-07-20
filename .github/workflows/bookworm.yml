@@ -9,7 +9,7 @@ jobs:
   build:
     permissions: write-all
     name: Edgeble-6 Bookworm runner
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
     - name: Checkout repository
@@ -58,8 +58,8 @@ jobs:
 
         # Insert github_action below the model key in the configuration file
         echo "Inserting github_action below the model key..."
-        sed -i '/recipe: recipe-kde.yaml/a \  github_action: '"$github_action" .config-kde.yaml
-        cat .config-kde.yaml
+        sed -i '/recipe: recipe.yaml/a \  github_action: '"$github_action" .config.yaml
+        cat .config.yaml
 
         echo "Clone container.."
         git clone git@gitlab.com:edgeble/tools/edgeble-container.git /tmp/edgeble-container  
@@ -70,22 +70,21 @@ jobs:
         sudo apt-get update
         sudo apt install qemu-user-static
         sudo apt install binfmt-support
-        edgeble-container -b v1.16-rk4.1 -c .config-kde.yaml bookworm
+        edgeble-container -b v2.01 -c .config.yaml bookworm
 
     - name: Upload output artifacts
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: "v1.16-rk4.1"
+        tag_name: "v2.01"
         body: |
           - Summary:
             ```
-            Jagan:
-            - 6.1-stan-rk4.1\
-            - add NPU 9.8 kernel
+            - fix gdb3
+            - bump v2.01 6.1-stan-rk4.1 kernel
             ```
           - SD
             ```
-            sudo bmaptool copy --bmap openeia-6tops-bookworm-x11-kde-v1.16-rk4.1.bmap openeia-6tops-bookworm-x11-kde-v1.16-rk4.1.img.gz /dev/sdX
+            sudo bmaptool copy --bmap edgeble-6b_bookworm_kde_v2.01.bmap edgeble-6b_bookworm_kde_v2.01.img.gz /dev/sdX
             ```
           - eMMC
             ```
@@ -94,8 +93,11 @@ jobs:
             - Program eMMC from host same like MicroSD
             ```
         files: |
-          ${{ github.workspace }}/builder/ospack-bookworm-arm64.tar.gz
-          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-kde-v1.16-rk4.1.bmap
-          ${{ github.workspace }}/builder/openeia-6tops-bookworm-x11-kde-v1.16-rk4.1.img.gz
+          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.01.ospack.tar.gz
+          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.01.deskpack.tar.gz
+          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.01.winpack.tar.gz
+          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.01.core_testpack.tar.gz
+          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.01.bmap
+          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.01.img.gz
       env:
         GITHU_TOKEN: ${{ secrets.GITHUB_TOKEN }}
