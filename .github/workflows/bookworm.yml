@@ -62,6 +62,7 @@ jobs:
         cat .config.yaml
 
         echo "Clone container.."
+        rm -rf -v /tmp/edgeble-container
         git clone git@gitlab.com:edgeble/tools/edgeble-container.git /tmp/edgeble-container  
         sudo cp -v /tmp/edgeble-container/edgeble-* /usr/local/bin/ 
         sudo chmod +x /usr/local/bin/edgeble-*
@@ -70,21 +71,22 @@ jobs:
         sudo apt-get update
         sudo apt install qemu-user-static
         sudo apt install binfmt-support
-        edgeble-container -b v2.01 -c .config.yaml bookworm
+        export RUNNER="${GITHUB_RUN_NUMBER}"
+        edgeble-container -b v2.02 -r $RUNNER bookworm
 
     - name: Upload output artifacts
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: "v2.01"
+        tag_name: "v2.02"
         body: |
           - Summary:
             ```
-            - fix gdb3
-            - bump v2.01 6.1-stan-rk4.1 kernel
+            - FIrefly ITX-3588
+            - Fix Display GDM
             ```
           - SD
             ```
-            sudo bmaptool copy --bmap edgeble-6b_bookworm_kde_v2.01.bmap edgeble-6b_bookworm_kde_v2.01.img.gz /dev/sdX
+            sudo bmaptool copy --bmap edgeble-6b_bookworm_kde_v2.02.bmap edgeble-6b_bookworm_kde_v2.02.img.gz /dev/sdX
             ```
           - eMMC
             ```
@@ -93,11 +95,11 @@ jobs:
             - Program eMMC from host same like MicroSD
             ```
         files: |
-          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.01.ospack.tar.gz
-          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.01.deskpack.tar.gz
-          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.01.winpack.tar.gz
-          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.01.core_testpack.tar.gz
-          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.01.bmap
-          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.01.img.gz
+          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.02.ospack.tar.gz
+          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.02.deskpack.tar.gz
+          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.02.winpack.tar.gz
+          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.02.core_testpack.tar.gz
+          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.02.bmap
+          ${{ github.workspace }}/builder/edgeble-6b_bookworm_kde_v2.02.img.gz
       env:
         GITHU_TOKEN: ${{ secrets.GITHUB_TOKEN }}
